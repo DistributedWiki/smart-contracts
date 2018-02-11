@@ -7,6 +7,7 @@ class JSONSerializable(object):
     def serialize(self):
         return jsonpickle.encode(self)
 
+    @property
     def hash(self):
         return hashlib.sha256(self.serialize().encode()).hexdigest()
 

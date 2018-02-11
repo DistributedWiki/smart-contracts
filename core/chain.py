@@ -4,15 +4,9 @@ class Chain(object):
 
     def add_block(self, block):
         self.blocks.append(block)
-        pass
+        # TODO - send block and synchronize
 
-    def proof_of_work(self, last_proof):
-        proof = 0
-        while self.valid_proof(last_proof, proof) is False:
-            proof += 1
-
-        return proof
-
+    @property
     def last_block(self):
         return self.blocks[-1]
 

@@ -1,6 +1,19 @@
+from core.transaction import *
+
+
 class TransactionsDB(object):
-    def __init__(self):
+    def __init__(self, chain):
         self.data = dict()
+        self.chain = chain
+
+        # add all unspent transactions to db
+        for block in self.chain.blocks:
+            for transaction in block.transactions:
+                if transaction.sender != BLOCK_REWARD_ADDRESS:
+                    for input in transaction.inputs:
+                        self.remove(input.id)
+                for output in transaction.outputs:
+                    self.add(output)
 
     def add(self, t):
         self.data[t.id] = t

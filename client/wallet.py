@@ -1,21 +1,11 @@
-from client.db import TransactionsDB
 from core.transaction import *
 
 
 class Wallet(object):
-    def __init__(self, address, chain):
+    def __init__(self, address, chain, transactions_db):
         self.address = address
         self.chain = chain
-        self.db = TransactionsDB()
-
-        # add all unspent transactions to db
-        for block in self.chain.blocks:
-            for transaction in block.transactions:
-                if transaction.sender != BLOCK_REWARD:
-                    for input in transaction.inputs:
-                        self.db.remove(input.id)
-                for output in transaction.outputs:
-                    self.db.add(output)
+        self.db = transactions_db
 
     def create_transaction(self, recipient, value, fee):
         transactions = self.db.get_by_address(self.address)
@@ -30,17 +20,11 @@ class Wallet(object):
                 break
 
         outputs = []
-        output_recipient = TransactionOutput(recipient, value)
-        while self.db.exists(output_recipient.id):
-            output_recipient.bump_nonce()
-
+        output_recipient = TransactionOutput.create_unique_tx(recipient, value)
         outputs.append(output_recipient)
 
         if inputs_val > value + fee:
-            output_change = TransactionOutput(self.address, inputs_val - value - fee)
-            while self.db.exists(output_change.id):
-                output_change.bump_nonce()
-
+            output_change = TransactionOutput.create_unique_tx(self.address, inputs_val - value - fee)
             outputs.append(output_change)
 
         transaction = Transaction(inputs, outputs)

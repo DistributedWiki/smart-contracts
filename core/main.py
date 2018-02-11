@@ -1,13 +1,14 @@
+import time
+
 from client.db import TransactionsDB
+from core.block import Block
 from core.transaction import Transaction
 from utils.utils import JSONSerializable
 
-x = {}
+block = Block(time.time(), 0, [])
 
-x[0] = 0
-x[1] = 1
-x[2] = 2
-x[3] = 3
+while not block.verify_proof_of_work():
+    block.nonce += 1
 
-for xx in x:
-    print(xx)
+print(block.hash())
+print(time.time() - block.timestamp)
