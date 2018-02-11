@@ -1,6 +1,6 @@
 from utils.utils import JSONSerializable
 
-BLOCK_REWARD = 0
+BLOCK_REWARD_ADDRESS = 0
 
 
 class TransactionOutput(JSONSerializable):
@@ -17,27 +17,37 @@ class TransactionOutput(JSONSerializable):
         self.value = value
         self.nonce = nonce
 
-    def bump_nonce(self):
-        self.nonce += 1
-
     @property
     def id(self):
         return self.hash()
+
+    @staticmethod
+    def create_unique_tx(recipient, value, transactions_db):
+        t = TransactionOutput(recipient, value)
+        while transactions_db.exists(t.id):
+                t.nonce += 1
+        return t
 
 
 class Transaction(JSONSerializable):
     def __init__(self, inputs=None, outputs=None):
         """
 
-        :param inputs: list of transactions id's (OutputTransaction.id) to be spent
-        :param outputs: list of OutTransaction objects
+        :param inputs: list of transactions id's (TransactionOutput.id) to be spent
+        :param outputs: list of TransactionOutput objects
         """
         self.inputs = inputs or []
         self.outputs = outputs or []
 
+    @property
+    def output_value(self):
+        v = 0
+        for output_tx in self.outputs:
+            v += output_tx.value
+        return v
 
-    def validate(self):
-        return "is signed - TODO"  # checking balance is not done here
+    def validate_signed(self):
+        return "is signed - TODO"
 
     def sign(self, key):
         pass  #TODO
