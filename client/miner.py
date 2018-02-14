@@ -11,11 +11,14 @@ class Miner(object):
     def __init__(self, address, chain, transactions_db):
         self.address = address
         self.chain = chain
-        self.db = transactions_db
+        self.db = transactions_db # TODO - move db to chain (but it should nod be serialized)
         self.transactions_queue = queue.Queue()
         #TODO - register as node in network -> callback to transactions queue
 
     def get_transaction_input_value(self, transaction):
+        """
+        :return: sum of all input transaction values
+        """
         inputs_value = 0
         for input_tid in transaction.inputs:
             inputs_value += self.db.get_by_tid(input_tid).value
@@ -78,7 +81,7 @@ class Miner(object):
 
     def create_block(self):
         transactions = []
-        fee = 0
+        fee = 0  # is calculated as difference between output and input of a transaction
         while not self.transactions_queue.empty() and len(transactions) < BLOCK_TRANSACTIONS_N_LIMIT:
             t = self.transactions_queue.get()
             if self.validate_transaction(t):
@@ -86,7 +89,7 @@ class Miner(object):
                 fee += self.get_transaction_input_value(t) - t.output_value
         # TODO - some algorithm for maximizing fees (implement in prorityQueue? )
 
-        reward_transaction_out = TransactionOutput.create_unique_tx(self.address, BLOCK_REWARD + fee)
+        reward_transaction_out = TransactionOutput.create_unique_tx(self.address, BLOCK_REWARD + fee, self.db)
         reward_transaction = Transaction([BLOCK_REWARD_ADDRESS], reward_transaction_out)
         reward_transaction.sign("TODO")
 
