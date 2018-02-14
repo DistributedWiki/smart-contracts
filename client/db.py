@@ -2,6 +2,10 @@ from core.transaction import *
 
 
 class TransactionsDB(object):
+    """
+    This class servers as database to hold all unspent transactions (of all nodes).
+    It is used to verify that transaction is valid (inputs of transaction has not been spent).
+    """
     def __init__(self, chain):
         self.data = dict()
         self.chain = chain
