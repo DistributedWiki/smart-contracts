@@ -3,9 +3,9 @@ from network.messages import *
 
 
 class NodeManager(object):
-    def __init__(self, n_peers, known_peers, chain, new_block_handler):
+    def __init__(self, known_peers, chain, new_block_handler):
         """
-        :param n_peers: number of connections to maintain
+        Connects to all know_peers and accepts all new connections -> keep connection to every alive node
         :param known_peers: list of know peers
         :param chain: local blockchain
         :param new_block_handler: callback function for receiving new block
@@ -15,7 +15,6 @@ class NodeManager(object):
         self.awaiting_block_list = []
         self.awaiting_block_number = None
 
-        self.n_peers = n_peers
         self.peers = []
         self.chain = chain
         self.new_block_handler = new_block_handler
@@ -39,12 +38,16 @@ class NodeManager(object):
         for peer in self.peers:
             self.connection_manager.send_message(peer, MessageSendTransaction(transaction).serialize())
 
+    def broadcast_block(self, block):
+        for peer in self.peers:
+            self.connection_manager.send_message(peer, MessageSendBlock(block).serialize())
+
     def request_block(self, block_number):
         """
         Sends request to all known nodes and waits for response (from all nodes or until timeout)
 
         :param block_number: number of requested block
-        :return: list of block returned by peers (in case they would be different)
+        :return: list of block returned by peers (in case they were different)
         """
         for peer in self.peers:
             self.connection_manager.send_message(peer, MessageRequestBlock(block_number).serialize())
@@ -70,8 +73,7 @@ class NodeManager(object):
         if message is MessageDiscover:
             response = MessageDiscoverResponse(self.peers)  # give info about all known peers
         elif message is MessageDiscoverResponse:
-            if len(self.peers) < self.n_peers:
-                self.__connect_to_peers(message.peers)
+            self.__connect_to_peers(message.peers)
         elif message is MessageRequestBlock:
             if message.block_n == LAST_BLOCK:
                 response = MessageSendBlock(self.chain.last_block)
@@ -99,13 +101,8 @@ class NodeManager(object):
             else:
                 self.peers.append(peer)
 
-            if len(self.peers) == self.n_peers:
-                return
-
     def __handle_new_connection(self, peer):
         self.peers.append(peer)
-        # TODO - stop listening for more connections (add function to connection_manager)
 
     def __handle_close_connection(self, peer):
         self.peers.remove(peer)
-        # TODO - start listening again, send DISCOVER message?

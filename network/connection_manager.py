@@ -62,12 +62,6 @@ class ConnectionManager(object):
         self.message_queues[sock] = queue.Queue()
         self.peers_connections[peer] = sock
 
-    def __send_message(self, peer, message):
-        connection = self.peers_connections[peer]
-        self.message_queues[connection].put_nowait(message)
-        if connection not in self.outputs:
-            self.outputs.append(connection)
-
     def send_message(self, peer, message):
         """
         Sends message asynchronously to a peer (connection must have been established first):
@@ -131,4 +125,10 @@ class ConnectionManager(object):
                 e.close()
                 self.close_connection_handler(e.getpeername())
                 del self.message_queues[e]
+
+    def __send_message(self, peer, message):
+        connection = self.peers_connections[peer]
+        self.message_queues[connection].put_nowait(message)
+        if connection not in self.outputs:
+            self.outputs.append(connection)
 
