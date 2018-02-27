@@ -1,4 +1,5 @@
 ## Documents
+[Project plan](https://hackmd.io/s/HJjAv-X_f)
 
 ### Blockchain architecture
 * [Bitcoin architecture](https://bitcoin.org/bitcoin.pdf)
