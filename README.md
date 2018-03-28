@@ -1,6 +1,6 @@
 ## Documents
-[Project plan](https://hackmd.io/s/HJjAv-X_f)
-[Wikipedia](https://hackmd.io/s/H1dwKHWcz)
+* [Plan + Ideas](https://hackmd.io/s/HJjAv-X_f)
+* [Distributed Wikipedia](https://hackmd.io/s/H1dwKHWcz)
 
 ### Blockchain architecture
 * [Bitcoin architecture](https://bitcoin.org/bitcoin.pdf)
