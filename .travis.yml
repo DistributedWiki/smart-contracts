@@ -1,0 +1,21 @@
+sudo: required
+
+language: node_js
+
+node_js:
+  - "8"
+
+cache:
+  directories:
+    - node_modules
+
+services:
+  - docker
+
+before_script:
+  - truffle version
+  - docker run -d -p 7545:8545 trufflesuite/ganache-cli:latest
+
+script:
+  - npm run lint
+  - npm run build

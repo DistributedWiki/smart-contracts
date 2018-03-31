@@ -1,15 +1,29 @@
 ## Distributed Wikipedia
 
+[![Build Status](https://travis-ci.org/chorig9/blockchain.svg?branch=master)](https://travis-ci.org/chorig9/blockchain)
+
+### Requirements
+
+See package.json
+
+Currently only Linux is supported
+
 ### How to run
 
 * set-up testrpc node (e.g. [Ganache](https://github.com/trufflesuite/ganache))
 
-* Run truffle commands to compile, deploy to blockchain and test:
+* To compile, migrate and run tests run:
 ```Bash
-truffle compile
+npm run build
+```
 
-truffle migrate
+* To run linter:
+```Bash
+npm run lint
+```
 
-truffle test
+* To fix issues reported by linter:
+```Bash
+npm run lint:fix
 ```
 

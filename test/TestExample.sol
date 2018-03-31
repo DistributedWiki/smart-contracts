@@ -7,7 +7,7 @@ import "../contracts/Example.sol";
 contract TestExample {
     Example example = Example(DeployedAddresses.Example());
 
-    function testSimple(){
+    function testSimple() public {
         Assert.equal(1, example.get(), "error message");
     }
 }
