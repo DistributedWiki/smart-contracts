@@ -1,0 +1,15 @@
+{
+  "name": "distwiki",
+  "version": "0.0.1",
+  "description": "Distributed Wikipedia",
+  "repository": "https://github.com/chorig9/blockchain",
+  "scripts": {
+    "build": "utils/build.sh",
+    "lint": "solium -d .",
+    "lint:fix": "solium -d . --fix"
+  },
+  "devDependencies": {
+    "truffle": "^4.1.5",
+    "solium": "^1.1.6"
+  }
+}
