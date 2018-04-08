@@ -4,5 +4,5 @@
 set -e 
 
 truffle compile
-truffle migrate
+truffle migrate --reset
 truffle test
