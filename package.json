@@ -4,13 +4,14 @@
   "description": "Distributed Wikipedia",
   "repository": "https://github.com/chorig9/blockchain",
   "scripts": {
-    "build": "truffle compile && truffle migrate",
-    "build-test": "truffle compile && truffle migrate && truffle test",
+    "build": "truffle compile && truffle migrate --reset",
+    "build-test": "truffle compile && truffle migrate --reset && truffle test",
     "lint": "solium -d .",
     "lint:fix": "solium -d . --fix"
   },
   "devDependencies": {
     "truffle": "^4.1.5",
-    "solium": "^1.1.6"
+    "solium": "^1.1.6",
+    "solparse": "^2.2.4"
   }
 }
