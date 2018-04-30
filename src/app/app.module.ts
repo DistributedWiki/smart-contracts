@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { ArticleService } from './article.service';
+import {Web3Service} from './web3.service';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -10,9 +13,10 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [ArticleService, Web3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
