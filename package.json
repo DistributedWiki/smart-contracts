@@ -4,7 +4,8 @@
   "description": "Distributed Wikipedia",
   "repository": "https://github.com/chorig9/blockchain",
   "scripts": {
-    "build": "utils/build.sh",
+    "build": "truffle compile && truffle migrate",
+    "build-test": "truffle compile && truffle migrate && truffle test",
     "lint": "solium -d .",
     "lint:fix": "solium -d . --fix"
   },
