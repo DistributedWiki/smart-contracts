@@ -5,19 +5,25 @@ import "./Article.sol";
 contract TopLevel {
 
     mapping (bytes32 => address) articles;
+    bytes32[] public titlesList;
 
     function TopLevel() public {
 
     }
 
-    function createArticle(bytes32 titleHash, bytes32 ID) public {
-        require(articles[titleHash] == 0); // TODO - handle hash collision
+    function createArticle(bytes32 title, bytes32 ID) public {
+        require(articles[title] == 0);
 
-        articles[titleHash] = new Article(ID);
+        titlesList.push(title);
+        articles[title] = new Article(ID);
     }
 
-    function getArticle(bytes32 titleHash) public view returns(address) {
-        return articles[titleHash];
+    function nTitles() public view returns(uint) {
+        return titlesList.length;
+    }
+
+    function getArticle(bytes32 title) public view returns(address) {
+        return articles[title];
     }
 
 }
