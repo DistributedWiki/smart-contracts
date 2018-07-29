@@ -1,6 +1,0 @@
-FROM node:8
-
-RUN npm install -g truffle
-RUN npm install -g ganache-cli
-RUN npm install -g solium
-RUN git clone https://github.com/DistributedWiki/smart-contracts /smart-contracts

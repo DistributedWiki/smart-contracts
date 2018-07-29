@@ -27,13 +27,3 @@ npm run lint
 npm run lint:fix
 ```
 
-### Running with docker
-
-Docker image ready for smart contracts deployment is provided.
-To use, run:
-
-```
-cd utils
-docker build -f Dockerfile.contracts -t contracts .
-docker run -p 7545:7545 contracts /bin/sh ./run.sh
-```

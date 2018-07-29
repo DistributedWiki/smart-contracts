@@ -14,8 +14,8 @@ services:
 
 before_script:
   - truffle version
-  - cd utils
-  - docker build -f Dockerfile.contracts -t contracts .
+  - docker run -d -p 7545:8545 trufflesuite/ganache-cli:latest
 
 script:
-  - docker run -p 7545:7545 contracts /bin/sh /smart-contracts/utils/run_test.sh
+  - npm run lint
+  - npm run build-test
