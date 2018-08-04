@@ -20,7 +20,7 @@ contract Article {
         commits.push(Commit({
             ID: Id,
             Author: msg.sender,
-            timestamp: now
+            timestamp: block.timestamp
         }));
     }
 
@@ -38,7 +38,7 @@ contract Article {
         commits.push(Commit({
             ID: Id,
             Author: msg.sender,
-            timestamp: now // This is inaccurate (this value is set by miner)
+            timestamp: block.timestamp // This is inaccurate (this value is set by miner)
         }));
 
         emit ArticleUpdated(Id);
