@@ -14,7 +14,7 @@ services:
 
 before_script:
   - truffle version
-  - docker run -d -p 7545:8545 trufflesuite/ganache-cli:latest
+  - docker run -d -p 7545:8545 trufflesuite/ganache-cli:latest -h 0.0.0.0
 
 script:
   - npm run lint
