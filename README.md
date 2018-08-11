@@ -1,6 +1,6 @@
 ## Distributed Wikipedia
 
-[![Build Status](https://travis-ci.org/DistributedWiki/smart-contracts.svg?branch=master)](https://travis-ci.org/chorig9/blockchain)
+[![Build Status](https://travis-ci.org/DistributedWiki/smart-contracts.svg?branch=master)](https://travis-ci.org/DistributedWiki/smart-contracts)
 
 ### Requirements
 
