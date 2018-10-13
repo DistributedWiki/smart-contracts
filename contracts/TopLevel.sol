@@ -11,11 +11,11 @@ contract TopLevel {
 
     }
 
-    function createArticle(bytes32 title, bytes32 ID) public {
+    function createArticle(bytes32 title, bytes32 ID, address[] authorized) public {
         require(articles[title] == 0);
 
         titlesList.push(title);
-        articles[title] = new Article(ID);
+        articles[title] = new Article(ID, msg.sender, authorized);
     }
 
     function nTitles() public view returns(uint) {
