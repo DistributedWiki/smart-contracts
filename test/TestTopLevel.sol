@@ -9,9 +9,9 @@ contract TestTopLevel {
     TopLevel top = TopLevel(DeployedAddresses.TopLevel());
 
     function testAdd() public {
-        top.createArticle(0x0, 0x000);
-        top.createArticle(0x1, 0x111);
-        top.createArticle(0x2, 0x222);
+        top.createArticle(0x0, 0x000, new address[](0));
+        top.createArticle(0x1, 0x111, new address[](0));
+        top.createArticle(0x2, 0x222, new address[](0));
 
         Article a0 = Article(top.getArticle(0x0));
         Assert.equal(a0.getArticleID(), 0x000, "Article address do not match");

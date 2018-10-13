@@ -13,15 +13,21 @@ contract Article {
     // changes made to article
     Commit[] public commits;
 
+    mapping (address => bool) public authorized;
+
     // event emitted when article is modified
     event ArticleUpdated(bytes32 newId);
 
-    function Article(bytes32 Id) public {
+    function Article(bytes32 Id, address author, address[] authorized_) public {
         commits.push(Commit({
             ID: Id,
-            Author: msg.sender,
+            Author: author,
             timestamp: block.timestamp
         }));
+
+        for (uint i = 0; i < authorized_.length; i++) {
+            authorized[authorized_[i]] = true;
+        }
     }
 
     // returns ID of latest version of article
@@ -35,6 +41,8 @@ contract Article {
     }
 
     function update(bytes32 Id) public {
+        require(authorized[msg.sender] == true);
+
         commits.push(Commit({
             ID: Id,
             Author: msg.sender,
